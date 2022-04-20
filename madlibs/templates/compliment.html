@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <title>A Compliment</title>
+</head>
+<body>
+  Hi {{ person }}! I think you're {{ compliment }}!
+  <form action="/game">
+    <p>Wanna play game?</p> 
+    <input type="radio" name="game" value="Yes">
+    Yes
+    <input type="radio" name="game" value="No">
+    No
+    <input type="submit">
+  </form>
+</body>
+</html>
+
+<!-- Modify the template compliment.html to ask the person if 
+they’d like to play a game (hint: try radio buttons). 
+Have this form submit to the URL path /game. This form 
+won’t work until we make the endpoint on flask, so now… -->
