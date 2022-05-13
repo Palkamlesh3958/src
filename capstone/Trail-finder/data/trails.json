@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+	<title>Prescription Trails - API</title>
+
+	<!-- CSS  -->
+	<!--[if IE]>
+    <link type="text/css" rel="stylesheet" href="https://prescriptiontrails.org/style.css"> <!-- blocking, but what else can ya do? -->
+	<![endif]-->  
+	<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    
+      ga('create', 'UA-73215109-1', 'auto');
+		var dimensionValue = 'en';
+		ga('set', 'dimension1', dimensionValue);	  
+      ga('send', 'pageview');
+    
+    </script> 
+<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="shortcut icon" href="https://prescriptiontrails.org/favicon.ico" />
+<link rel="manifest" href="/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">  
+
+</head>
+<body class="bodyBkg">
+  
+
+<link type="text/css" rel="stylesheet" href="https://prescriptiontrails.org/style.css">
+  <nav class="no-print">
+    <div class="nav-wrapper white">
+    	<div class="container green-text text-darken-3">
+          <a href="https://prescriptiontrails.org/" class="brand-logo hide-on-small-and-down"><img src="https://prescriptiontrails.org/img/logo-small-old.jpg" alt="Prescription Trails Logo" class="logo" /></a>
+          <a href="https://prescriptiontrails.org/" class="brand-logo hide-on-med-and-up"><img src="https://ptnmcdn.s3.amazonaws.com/rxicon.jpg" alt="Prescription Trails Logo" class="logo" /></a>
+          <a href="#" data-activates="mobile-nav" class="button-collapse green-text text-darken-3"><i class="material-icons">menu</i></a>
+		
+          <a href="#userUnAuth" class="modal-trigger button-collapse green-text text-darken-3 right hide-on-med-and-up"><i class="material-icons green-text text-darken-3" style="display:none!important">account_circle</i></a>
+	      <ul class="right hide-on-med-and-down">
+        <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/filter/">Search</a></li>
+        <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/map/">Map</a></li>
+        <li><a href="#drawer" class="modal-trigger green-text text-darken-3">Menu</a></li>
+        <li><a class="dropdown-button green-text text-darken-3" href="#!" data-activates="langDrop">Language</a></li>
+		
+            <li><a href="#userUnAuth" class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="MyPrescriptionTrails"><i class="material-icons green-text text-darken-3" style="display:none!important">account_circle</i></a></li>
+	      </ul>
+      <ul class="right hide-on-small-and-down hide-on-large-only">
+		
+            <li><a href="#userUnAuth" class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="MyPrescriptionTrails"><i class="material-icons green-text text-darken-3" style="display:none!important">account_circle</i></a></li>
+	      </ul>
+<ul id="langDrop" class="dropdown-content">
+  <li><a href="https://prescriptiontrails.org/lang/?set=es&rdr=/api/">Español</a></li>
+  <li><a href="https://prescriptiontrails.org/lang/?set=en&rdr=/api/">English</a></li>
+</ul>
+    
+<!--
+          <ul class="right hide-on-med-and-down">
+            <li><a class="tooltipped" href="https://prescriptiontrails.org/filter/" data-position="bottom" data-delay="50" data-tooltip="Search for trails"><i class="material-icons green-text text-darken-3" style="display:none!important">search</i></a></li>
+            <li><a href="https://prescriptiontrails.org/map/" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="View map of all trails"><i class="fa fa-2x fa-map green-text text-darken-3" style="display:none!important"></i></a></li>
+            <li><a href="#" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Change Language" onClick="Materialize.toast('Still working on this part!', 8000);"><i class="fa fa-2x fa-globe green-text text-darken-3" style="display:none!important"></i></a></li>
+            <li><a href="#drawer" class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="Open menu"><i class="material-icons green-text text-darken-3" style="display:none!important">more_vert</i></a></li>
+		
+            <li><a href="#userUnAuth" class="modal-trigger tooltipped" data-position="bottom" data-delay="50" data-tooltip="MyPrescriptionTrails"><i class="material-icons green-text text-darken-3" style="display:none!important">account_circle</i></a></li>
+	          </ul>
+-->
+          <ul class="side-nav" id="mobile-nav">
+            <li><a href="https://prescriptiontrails.org/">Home</a></li>
+            <li><a href="https://prescriptiontrails.org/filter/">Find Trails</a></li>
+            <li><a href="https://prescriptiontrails.org/map/">Map of all trails</a></li>
+		
+            <li><a href="https://prescriptiontrails.org/user/new/account/">Create account</a></li>
+	            <li><a href="https://prescriptiontrails.org/about/contact/">Contact Us</a></li>
+              <li class="no-padding">
+                <ul class="collapsible collapsible-accordion">
+                  <li>
+                    <a class="collapsible-header">Language<i class="mdi-navigation-arrow-drop-down"></i></a>
+                    <div class="collapsible-body">
+                      <ul>
+                          <li><a href="https://prescriptiontrails.org/lang/?set=es&rdr=/api/">Español</a></li>
+                          <li><a href="https://prescriptiontrails.org/lang/?set=en&rdr=/api/">English</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+
+       </div>
+    </div>
+  </nav>
+
+      <div class="container" style="margin-top:30px;">
+
+                	<h1 class="center glow hide-on-small-and-down">Prescription Trails API</h1>
+                	<h2 class="center glow hide-on-med-and-up">Prescription Trails API</h2>
+
+
+		<div class="row">
+        
+            <div class="col s12">
+            
+              <div class="card hoverable white">
+              
+              	<div class="card-content">
+                                          
+                    <h3>The Basics</h3>                    
+                    <p class="flow-text" style="margin-bottom:10px;">Prescription Trails makes our database of trails around the state available to other developers via a JSON API.</p>
+                    <p>These data are licensed under the <a class="green-text text-darken-3" rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.</p>
+
+                    <h3>Trail Object</h3>                    
+                    <p>Trail data can be retrieved by sending a <code>GET</code> request to <code>https://prescriptiontrails.org/api/trail/</code> with the trail's id as a variable. For example, <code>GET https://prescriptiontrails.org/api/trail/?id=2</code> returns the following information in JSON:</p>
+                    <pre>
+
+	{
+    "id": 2,
+    "name": "Tingley Beach",
+    "city": "Albuquerque",
+    "zip": 87104,
+    "crossstreets": "Central Ave. & Tingley Dr. SW",
+    "address": "1800 Tingley Drive SW",
+    "transit": "ABQ Ride Stops:  #66, Rapid Ride",
+    "lat": "35.086244",
+    "lng": "-106.674171",
+    "desc": "Tingley%20Beach%20is%20on%20the%20Rio%20Grande%2C%20near%20downtown%20Albuquerque%2C%20next%20to%20the%20BIOPark%20%E2%80%93%20Zoo%20and%20Aquarium%20and%20offers%20fishing%2C%20hiking%2C%20model%20boat%20sailing%2C%20wildlife%20viewing%20and%20walking%20trails%20around%20three%20ponds.%20For%20more%20information%20on%20events%2C%20call%20505-248-8514.%20Visit%20the%20city%27s%20%3Ca%20href%3D%22https%3A%2F%2Fwww.cabq.gov%2Fculturalservices%2Fbiopark%2Ftingley%2Ffishing%2Fweekly-fishing-report%22%3EWeekly%20Fishing%20Report%3C%2Fa%3E%20for%20information%20on%20fishing.",
+    "lighting": "None",
+    "difficulty": 1,
+    "surface": "5-foot wide pavement",
+    "parking": "ADA accessible, ample parking on site",
+    "facilities": "Restrooms, bike racks",
+    "hours": "Dawn to dusk",
+    "loopcount": 3,
+    "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450551278tingleyBeachSat.png",
+    "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450551300tingly.jpg",
+    "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1450551300tingly.jpg",
+    "attractions": [
+        "paddle%20boat%20rentals",
+        "Model%20boat%20sailing",
+        "Bird%20watching",
+        "Fishing%20-%20Train%20station%20sells%20bait",
+        "Seasonal%20gift%20shop%2C%20snack%20bar%2C%20and%20cafe"
+    ],
+    "loops": {
+        "1": {
+            "name": "North Loop",
+            "distance": "0.16",
+            "steps": 338
+        },
+        "2": {
+            "name": "Central Pond and Children's Pond",
+            "distance": "0.17",
+            "steps": 359
+        },
+        "3": {
+            "name": "Large Central and South Ponds Connect",
+            "distance": "0.6",
+            "steps": 1267
+        }
+    },
+    "published": "true",
+    "rating": 4,
+    "ratings": 2,
+    "favorites": 6,
+    "ModifiedTime": "2021-06-19 17:33:51",
+    "reviews": 0,
+    "url": "https:\/\/prescriptiontrails.org\/trail\/2\/tingley-beach\/",
+    "translations": [
+        "es"
+    ]
+}
+                    </pre>
+
+                    <h3>Filter</h3>                    
+                    <p>Our database can be searched by sending a <code>GET</code> request to <code>https://prescriptiontrails.org/api/filter/</code> with filter commands as variables. Each request will return the number of trails returned as <code>countReturned</code> and the total number of trails matched by the query as <code>totalMatched</code>. Note, you must set <code>offset</code> and <code>count</code>. For example, <code>GET https://prescriptiontrails.org/api/filter/?by=city&city=Albuquerque&offset=0&count=6 </code> returns the following information in JSON:</p>
+                    <pre>
+
+	{
+    "trails": [
+        {
+            "id": 1,
+            "name": "Tingley Field",
+            "city": "Albuquerque",
+            "zip": 87102,
+            "crossstreets": "Coal and 10th SW",
+            "address": "10 Atlantic Ave SW",
+            "transit": "ABQ Ride Stops:  #53, #54",
+            "lat": "35.0772432",
+            "lng": "-106.6555564",
+            "desc": "This%20redeveloped%20park%20provides%20a%20catchment%20basin%20in%20monsoon%20season%2C%20and%20the%20new%20recreation%20facilities%20and%20walking%20trail%20are%20great%20for%20the%20whole%20family.",
+            "lighting": "On trail and parking lot",
+            "difficulty": 1,
+            "surface": "6-foot+ wide sidewalk, 4-foot wide gravel on 2 sides",
+            "parking": "On site",
+            "facilities": "Restrooms",
+            "hours": "6 a.m. - 10 p.m.",
+            "loopcount": 1,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450547549tingleyParkSat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1455036748P1130010.jpg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1455036748P1130010.jpg",
+            "attractions": [
+                "%3Ca%20href%3D%22https%3A%2F%2Fwww.cabq.gov%2Fculturalservices%2Fbiopark%2Fzoo%22%3EZoo%3C%2Fa%3E%20located%20across%2010th%20Street",
+                "Tennis%20courts%20across%208th%20street",
+                "Shaded%20playgrounds%20and%20picnic%20area",
+                "Grassy%20field",
+                "Softball%20fields"
+            ],
+            "loops": {
+                "1": {
+                    "name": "Main Loop",
+                    "distance": "0.6",
+                    "steps": 1267
+                }
+            },
+            "published": "true",
+            "rating": 3,
+            "ratings": 1,
+            "favorites": 0,
+            "ModifiedTime": "2019-09-30 11:55:21",
+            "reviews": 1,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/1\/tingley-field\/"
+        },
+        {
+            "id": 2,
+            "name": "Tingley Beach",
+            "city": "Albuquerque",
+            "zip": 87104,
+            "crossstreets": "Central Ave. & Tingley Dr. SW",
+            "address": "1800 Tingley Drive SW",
+            "transit": "ABQ Ride Stops:  #66, Rapid Ride",
+            "lat": "35.086244",
+            "lng": "-106.674171",
+            "desc": "Tingley%20Beach%20is%20on%20the%20Rio%20Grande%2C%20near%20downtown%20Albuquerque%2C%20next%20to%20the%20BIOPark%20%E2%80%93%20Zoo%20and%20Aquarium%20and%20offers%20fishing%2C%20hiking%2C%20model%20boat%20sailing%2C%20wildlife%20viewing%20and%20walking%20trails%20around%20three%20ponds.%20For%20more%20information%20on%20events%2C%20call%20505-248-8514.%20Visit%20the%20city%27s%20%3Ca%20href%3D%22https%3A%2F%2Fwww.cabq.gov%2Fculturalservices%2Fbiopark%2Ftingley%2Ffishing%2Fweekly-fishing-report%22%3EWeekly%20Fishing%20Report%3C%2Fa%3E%20for%20information%20on%20fishing.",
+            "lighting": "None",
+            "difficulty": 1,
+            "surface": "5-foot wide pavement",
+            "parking": "ADA accessible, ample parking on site",
+            "facilities": "Restrooms, bike racks",
+            "hours": "Dawn to dusk",
+            "loopcount": 3,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450551278tingleyBeachSat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450551300tingly.jpg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1450551300tingly.jpg",
+            "attractions": [
+                "paddle%20boat%20rentals",
+                "Model%20boat%20sailing",
+                "Bird%20watching",
+                "Fishing%20-%20Train%20station%20sells%20bait",
+                "Seasonal%20gift%20shop%2C%20snack%20bar%2C%20and%20cafe"
+            ],
+            "loops": {
+                "1": {
+                    "name": "North Loop",
+                    "distance": "0.16",
+                    "steps": 338
+                },
+                "2": {
+                    "name": "Central Pond and Children's Pond",
+                    "distance": "0.17",
+                    "steps": 359
+                },
+                "3": {
+                    "name": "Large Central and South Ponds Connect",
+                    "distance": "0.6",
+                    "steps": 1267
+                }
+            },
+            "published": "true",
+            "rating": 4,
+            "ratings": 2,
+            "favorites": 6,
+            "ModifiedTime": "2021-06-19 17:33:51",
+            "reviews": 0,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/2\/tingley-beach\/"
+        },
+        {
+            "id": 3,
+            "name": "Tiguex Park",
+            "city": "Albuquerque",
+            "zip": 87104,
+            "crossstreets": "Mountain & Rio Grande NW",
+            "address": "1800 Mountain Rd NW",
+            "transit": "ABQ Ride Stops:  #36, bus stop on Rio Grande & Mountain - 235 steps to park",
+            "lat": "35.0967569",
+            "lng": "-106.66616",
+            "desc": "Walk%20two%20loop%20paths%20at%20Tiguex%20Park%2C%20starting%20at%2019th%20Street.%20The%20outer%20loop%20and%20inner%20loop%20connect%20at%20several%20points%2C%20adding%20variety.%20The%20park%20is%20visible%20from%20the%20street%2C%20and%20many%20people%20visit%20it.",
+            "lighting": "None",
+            "difficulty": 1,
+            "surface": "8-foot wide concrete",
+            "parking": "On street",
+            "facilities": "Picnic tables",
+            "hours": "6 a.m. - 10 p.m.",
+            "loopcount": 2,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450551913tiguex-park.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450551924tiguex.jpg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1450551924tiguex.jpg",
+            "attractions": [
+                "Nearby%3A%20%3Ca%20href%3D%22http%3A%2F%2Fwww.nmnaturalhistory.org%2F%22%3ENew%20Mexico%20Museum%20of%20Natural%20History%20and%20Science%3C%2Fa%3E",
+                "Nearby%3A%20%3Ca%20href%3D%22http%3A%2F%2Fwww.explora.us%2F%22%3EExplora%3C%2Fa%3E",
+                "Nearby%3A%20%3Ca%20href%3D%22http%3A%2F%2Fwww.cabq.gov%2Fculturalservices%2Falbuquerque-museum%22%3EAlbuquerque%20Museum%20of%20Art%20and%20History%3C%2Fa%3E",
+                "Exercise%20stations%3A%20outdoor%20fitness%20equipment%20located%20along%20walking%20trail",
+                "Basketball%20courts",
+                "Play%20areas"
+            ],
+            "loops": {
+                "1": {
+                    "name": "Inner Loop",
+                    "distance": "0.3",
+                    "steps": 634
+                },
+                "2": {
+                    "name": "Outer Loop",
+                    "distance": "0.5",
+                    "steps": 1056
+                }
+            },
+            "published": "true",
+            "rating": 4,
+            "ratings": 2,
+            "favorites": 8,
+            "ModifiedTime": "2021-06-19 17:33:57",
+            "reviews": 0,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/3\/tiguex-park\/"
+        },
+        {
+            "id": 4,
+            "name": "Durand Open Space",
+            "city": "Albuquerque",
+            "zip": 87105,
+            "crossstreets": "Isleta Blvd. & Metzgar Rd. SW",
+            "address": "4812 Isleta Blvd SW",
+            "transit": "Abq Ride Stop #53",
+            "lat": "35.001974",
+            "lng": "-106.689702",
+            "desc": "This%20trail%20around%20grain%20fields%20provides%20a%20relaxing%20and%20fun%20walk.%20The%20site%20is%20farmed%20for%20wildlife%20to%20attract%20birds%2C%20and%20features%20a%20crossing%20to%20the%20bosque.%20Known%20by%20residents%20and%20pilots%20as%20the%20%E2%80%9CP-Patch%E2%80%9D%2C%20the%20landing%20strip%20and%20an%20adjoining%20hanger%20were%20used%20to%20conduct%20aircraft%20repair%20and%20restoration.%20%20Following%20the%20closure%20of%20the%20landing%20strip%20in%20the%201970s%2C%20the%20property%20reverted%20to%20agriculture.",
+            "lighting": "None",
+            "difficulty": 2,
+            "surface": "5-foot wide crusher fine",
+            "parking": "On site",
+            "facilities": "Benches",
+            "hours": "Dawn to dusk",
+            "loopcount": 1,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450748639durandParkSat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1454876314Durand.jpg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1454876314Durand.jpg",
+            "attractions": [
+                "Bird%20watching",
+                "Agriculture%20fields%20and%20an%20acequia",
+                "Shaded%20picnic%20tables",
+                "Views",
+                "Dogs%20allowed%20on%20leash%20only"
+            ],
+            "loops": {
+                "1": {
+                    "name": "Main Loop",
+                    "distance": "0.6",
+                    "steps": 1267
+                }
+            },
+            "published": "true",
+            "rating": 3,
+            "ratings": 1,
+            "favorites": 1,
+            "ModifiedTime": "2020-04-02 11:17:33",
+            "reviews": 0,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/4\/durand-open-space\/"
+        },
+        {
+            "id": 5,
+            "name": "Gutierrez-Hubbell Open Space",
+            "city": "Albuquerque",
+            "zip": 87105,
+            "crossstreets": "Isleta Blvd. & Don Felipe Rd. SW",
+            "address": "6029 Isleta Blvd SW",
+            "transit": "ABQ Ride Stops:  #66, Rapid Ride",
+            "lat": "34.989444",
+            "lng": "-106.696689",
+            "desc": "Gutierrez-Hubbell%20House%20Open%20Space%20offers%20views%20of%20the%20farm%20and%20demonstration%20gardens%20on%20this%20historic%20site%2C%20making%20this%20a%20pleasing%20walk.%20Many%20public%20events%20are%20offered%20throughout%20the%20year%20-%20call%20%28505%29%20314-0400%20for%20details.",
+            "lighting": "None",
+            "difficulty": 3,
+            "surface": "4-foot wide loose mulch or crusher fine",
+            "parking": "On site during open hours or along Hubbell",
+            "facilities": "Historic building",
+            "hours": "dawn to dusk",
+            "loopcount": 2,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450749461gutierrezHubbellSat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1450749670CIMG6601.JPG",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1450749670CIMG6601.JPG.jpg",
+            "attractions": [
+                "%3Ca%20href%3D%22http%3A%2F%2Fgutierrezhubbellhouse.org%22%3EGuti%C3%A9rrez-Hubbell%20House%3C%2Fa%3E%20-%20open%20Tuesdays%20through%20Saturdays%20from%2010%20a.m.%20%E2%80%93%202%20p.m.",
+                "Agriculture%20fields%20and%20an%20acequia",
+                "Demonstration%20gardens",
+                "Dogs%20-%20on%20leash%20only"
+            ],
+            "loops": {
+                "1": {
+                    "name": "Upper Loop",
+                    "distance": "0.3",
+                    "steps": 634
+                },
+                "2": {
+                    "name": "Lower Loop",
+                    "distance": "0.4",
+                    "steps": 845
+                }
+            },
+            "published": "true",
+            "rating": 3.5,
+            "ratings": 2,
+            "favorites": 3,
+            "ModifiedTime": "2021-04-01 13:55:20",
+            "reviews": 0,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/5\/gutierrez-hubbell-open-space\/"
+        },
+        {
+            "id": 6,
+            "name": "Pajarito Open Space",
+            "city": "Albuquerque",
+            "zip": 87105,
+            "crossstreets": "Isleta Blvd. & Pajarito Rd. SW",
+            "address": "6001 Beck Rd SW",
+            "transit": "None",
+            "lat": "34.9919803",
+            "lng": "-106.7037313",
+            "desc": "A%20trail%20around%20the%20grain%20field%20and%20under%20the%20trees%20provides%20a%20relaxing%20and%20fun%20walk.%20Pajarito%20Open%20Space%20offers%20a%20beautiful%20view%20of%20the%20West%20Mesa%20and%20the%20large%20trees%20are%20ideal%20for%20bird%20watching.%20It%20is%20located%20at%20the%20southwest%20corner%20of%20Beck%20Rd.%20and%20Don%20Felipe%20Rd.%20The%20property%20was%20owned%20by%20the%20Beck%20family%20for%20many%20years%20and%20was%20a%20small%20family%20dairy%20farm%20with%20surrounding%20alfalfa%20fields.%20The%20property%20is%20surrounded%20by%20a%20mix%20of%20agricultural%20and%20residential%20development.",
+            "lighting": "None",
+            "difficulty": 2,
+            "surface": "6 - 10 foot wide crusher fine",
+            "parking": "On site",
+            "facilities": "None",
+            "hours": "Dawn to dusk",
+            "loopcount": 3,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1451166291pajaritoSat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1451166297Pajarito.jpg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1451166297Pajarito.jpg",
+            "attractions": [
+                "Shaded%20benches",
+                "Picnic%20tables",
+                "Dogs%20permited%20on%20leash%20only"
+            ],
+            "loops": {
+                "1": {
+                    "name": "North Loop (1)",
+                    "distance": "0.3",
+                    "steps": 634
+                },
+                "2": {
+                    "name": "Middle Loop (2)",
+                    "distance": "0.5",
+                    "steps": 1056
+                },
+                "3": {
+                    "name": "South Loop (3)",
+                    "distance": "0.6",
+                    "steps": 1267
+                }
+            },
+            "published": "true",
+            "rating": 3.5,
+            "ratings": 2,
+            "favorites": 5,
+            "ModifiedTime": "2020-04-02 11:16:21",
+            "reviews": 0,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/6\/pajarito-open-space\/"
+        }
+    ],
+    "countReturned": 6,
+    "totalMatched": 53
+}
+                    </pre>
+                    <h5>Filtering options</h5>  
+                    	<p><strong>city</strong> - Returns trails in a given city or county. Example <code>GET https://prescriptiontrails.org/api/filter/?by=city&city=Albuquerque&offset=0&count=6 </code></p><br>               
+                    	<p><strong>zip</strong> - Returns trails in zip code. Example <code>GET https://prescriptiontrails.org/api/filter/?zip=87102&by=zip&offset=0&count=6 </code></p><br>                   
+                    	<p><strong>name</strong> - Searches for a string. Example <code>GET https://prescriptiontrails.org/api/filter/?name=tingley&by=name&offset=0&count=6 </code></p><br>                   
+                    
+                    <h5>Filtering by current location</h5>  
+                    	<p>To search for trails near a location, simply pass a latitude and longitude to the filter endpoint. This search does not return a meaningful <code>totalMatched</code> object. The function will return as many trails as you designate with the <code>count</code> option within 75 miles. The distance from the provided coordinates for each trail is given in the returned <code>distance</code> variable. The following query provides the two trails nearest to the Rio Grande Flying Star. <code>GET https://prescriptiontrails.org/api/filter/?by=coord&lat=35.138321399999995&lng=-106.6676598&offset=0&count=2 </code></p>
+                        <pre>
+    
+        {
+    "trails": [
+        {
+            "id": 21,
+            "name": "Los Poblanos Open Space",
+            "city": "Albuquerque",
+            "zip": 87107,
+            "crossstreets": "Montano & Rio Grande Blvd. NW but access is easier from 4th St then west to site",
+            "address": "Montano & Rio Grande Blvd. NW",
+            "transit": "unavailable",
+            "lat": "35.1359657",
+            "lng": "-106.6692826",
+            "desc": "Visit%20the%20site%20of%20the%20annual%20Harvest%20Festival%20and%20Maize%20Maze.%20Be%20sure%20to%20check%20out%20the%20community%20garden%20maintained%20by%20Rio%20Grande%20Community%20Farm%21%20Enter%20from%20Montano%20Boulevard%20or%20from%20Alvarado%20Elementary%20School%20%28Solar%20%26%20Nabor%29%20on%20the%20north%20side.",
+            "lighting": "None",
+            "difficulty": 3,
+            "surface": "Wide natural farm roads, ditch banks",
+            "parking": "On street",
+            "facilities": "Pet waste receptables",
+            "hours": "7 a.m. to dusk",
+            "loopcount": 4,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1453068710los-poblanos-open-space-sat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1453672133CIMGd3962.jpg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1453672133CIMGd3962.jpg",
+            "attractions": [
+                "Wildlife%20habitat",
+                "Active%20farming",
+                "Lots%20of%20activity",
+                "Bicycle%20lane%20on%20Mantano"
+            ],
+            "loops": {
+                "1": {
+                    "name": "Outer Perimeter",
+                    "distance": "1.86",
+                    "steps": 3928
+                },
+                "2": {
+                    "name": "Loop 1",
+                    "distance": "1.0",
+                    "steps": 2112
+                },
+                "3": {
+                    "name": "Loop 2",
+                    "distance": "0.9",
+                    "steps": 1900
+                },
+                "4": {
+                    "name": "Loop 3",
+                    "distance": "0.8",
+                    "steps": 1687
+                }
+            },
+            "published": "true",
+            "rating": 5,
+            "ratings": 1,
+            "favorites": 5,
+            "ModifiedTime": "2021-06-19 17:34:13",
+            "reviews": 0,
+            "distance": 0.17920624833756,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/21\/los-poblanos-open-space\/"
+        },
+        {
+            "id": 19,
+            "name": "Aldo Leopold Trail",
+            "city": "Albuquerque",
+            "zip": 87107,
+            "crossstreets": "Candelaria & Rio Grande Blvd NW",
+            "address": "Candelaria & Rio Grande Blvd NW",
+            "transit": "#36",
+            "lat": "35.125096",
+            "lng": "-106.6738396",
+            "desc": "Accessed%20through%20Rio%20Grande%20Nature%20Center%20State%20Park%2C%20the%20trail%20starts%20at%20the%20center%E2%80%99s%20west%20gate.%20Cross%20the%20bridge%20and%20climb%20the%20hill%20to%20your%20right.%20At%20the%20top%20of%20the%20levee%2C%20cross%20the%20multi-use%20Paseo%20del%20Bosque%20trail.%20After%20hours%2C%20the%20trail%20can%20be%20accessed%20from%20the%20multi-use%20trail%20at%20the%20end%20of%20Candelaria.%20Access%20free%20from%20Paseo%20del%20Bosque%20trail.",
+            "lighting": "None",
+            "difficulty": 1,
+            "surface": "6-8 foot wide asphalt",
+            "parking": "An entrance fee is required, or bring your \u2018walking prescription\u2019 to the Visitor Center, and NM State Parks will issue a six month free pass.",
+            "facilities": "Visitor Center",
+            "hours": "6 a.m. to 10 p.m",
+            "loopcount": 1,
+            "satImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1453068527aldo-leopold-trail-sat.png",
+            "largeImgURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/1475595595Unknown.jpeg",
+            "thumbURL": "https:\/\/prescriptiontrails.org\/admin\/new\/images\/square_1475595595Unknown.jpg",
+            "attractions": [
+                "Wildlife%20viewing",
+                "River%20access",
+                "Nature%20Center%20parking%20lot%20and%20grounds%20are%20open%208-5"
+            ],
+            "loops": {
+                "1": {
+                    "name": "Main Loop",
+                    "distance": "1.25",
+                    "steps": 2640
+                }
+            },
+            "published": "true",
+            "rating": 3,
+            "ratings": 1,
+            "favorites": 4,
+            "ModifiedTime": "2021-04-01 13:58:37",
+            "reviews": 0,
+            "distance": 0.97314305791236,
+            "url": "https:\/\/prescriptiontrails.org\/trail\/19\/aldo-leopold-trail\/"
+        }
+    ],
+    "countReturned": 2,
+    "totalMatched": 2
+}    
+                        </pre>
+
+                    <h3>Reviews</h3>                    
+                    <p>JSON responses for trail object requests include the number of user reviews under the key <code>reviews</code>. If reviews are available, we can use the following <code>GET</code> request to retrieve them: <code>GET https://prescriptiontrails.org/api/reviews/?id=16 </code></p>
+                    <pre>
+
+	[
+    {
+        "id": 1,
+        "uid": 31,
+        "tid": 16,
+        "review": "This fantastic little park is located near the University and is beautiful in the summer and fall for afternoon or evening strolls. Highly recommend!",
+        "datetime": "2016-10-10 14:44:48"
+    }
+]
+                    </pre>
+
+
+                    <h3>Translations</h3>                    
+                    <p>Notice that the JSON response for trail requests includes available translations under the key <code>translations</code>. In the request illustrated above, Spanish (es) is listed as an available translation. In order to retrieve this translation, we will send a <code>GET</code> request: <code>GET https://prescriptiontrails.org/api/translation/?lang=es&id=2 </code></p>
+                    <pre>
+
+	{
+    "id": 7,
+    "trail_id": 2,
+    "desc": "Tingley%20Beach%20se%20encuentra%20en%20el%20R%C3%ADo%20Grande%2C%20cerca%20del%20centro%20de%20Albuquerque%2C%20junto%20al%20BioPark%20-%20Zoo%20y%20Acuario%2C%20y%20ofrece%20la%20pesca%2C%20excursionismo%2C%20navegaci%C3%B3n%20de%20veleros%2C%20vista%0D%0Ade%20vida%20salvaje%20y%20senderos%20para%20caminar%20alreadedor%20de%20tres%20estanques.%20Para%20obtener%20m%C3%A1s%20informaci%C3%B3n%20sobre%20los%20eventos%2C%20llame%20505-248-8514.%20Visita%20el%20Informe%20Semanal%20de%20Pesca%20de%20la%20ciudad%20para%20obtener%20informaci%C3%B3n%20sobre%20la%20pesca.",
+    "lighting": "Ninguno",
+    "surface": "Pavimento de 5 pies de ancho",
+    "parking": "Accesible (ADA), amplio estacionamiento en el mismo lugar",
+    "facilities": " Ba\u00f1os, estantes para bicicletas,",
+    "hours": "Amanecer - Atardecer",
+    "attractions": [
+        "renta%20de%20botes%20de%20pedales",
+        "navegaci%C3%B3n%20del%20bote%20modelo",
+        "Buena%20observaci%C3%B3n%20de%20aves",
+        "Pescadores%20de%20ca%C3%B1a%20de%2012%20a%C3%B1os%20en%20adelante%20necesitan%20una%20licencia%20v%C3%A1lida%20de%20pescar%20de%20Nuevo%20Mexico.%20La%20estaci%C3%B3n%20de%20tren%20vende%20anzuelos",
+        "tienda%20de%20regalos%2C%20tienda%20de%20bocadillos%2C%20caf%C3%A9%20abierto%20en%20temporadas",
+        ""
+    ],
+    "loops": {
+        "1": {
+            "name": "Trayectoria Circular Norte"
+        },
+        "2": {
+            "name": "Estanque central y estanque de ni\u00f1os"
+        },
+        "3": {
+            "name": "Conexi\u00f3n de los estanques grande Central y Sur"
+        }
+    },
+    "lang": "es"
+}
+                    </pre>
+
+                	<h3>Website Source Code</h3>                   
+                    <p>The source code for this website is available for use under the <a class="green-text text-darken-3" rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>. It is available at this <a href="https://github.com/jmayfiel/prescriptiontrails">GitHub repository</a>.</p>
+
+                	<h3>Questions?</h3>                   
+                    <p>Feel free to <a href="https://prescriptiontrails.org/about/contact/">contact us</a> with any questions.</p> 
+                                    
+                </div>
+              
+              </div>
+            
+            </div>
+
+      </div>
+      
+      </div>
+
+
+<div id="cover">
+    <div class="preloader-wrapper big active" id="locLoad">
+      <div class="spinner-layer spinner-blue">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-red">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-yellow">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+
+      <div class="spinner-layer spinner-green">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div><div class="gap-patch">
+          <div class="circle"></div>
+        </div><div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+</div>
+  <div id="drawer" class="modal bottom-sheet no-print">
+    <div class="modal-content">
+    	<div class="container">
+                  
+          <div class="row">
+
+            <a href="https://prescriptiontrails.org/about/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-child"></i></h2>
+                <p>Program & Partners</p>
+            </a>
+
+            <a href="https://prescriptiontrails.org/about/contact/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-edit"></i></h2>
+                <p>Contact Us</p>
+            </a>
+
+            <a href="https://prescriptiontrails.org/about/sun/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-sun-o"></i></h2>
+                <p>Sun Safety</p>
+            </a>
+
+            <a href="https://prescriptiontrails.org/about/pets/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-paw"></i></h2>
+                <p>Walking Your Pet</p>
+            </a>
+                        
+          </div>
+
+          <div class="row">
+
+            <a href="https://prescriptiontrails.org/user/login/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-user"></i></h2>
+                <p>Log In</p>
+            </a>
+
+            <a href="https://prescriptiontrails.org/user/forgot/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-question-circle"></i></h2>
+                <p>Password Reset</p>
+            </a>
+
+            <a href="https://prescriptiontrails.org/about/providers/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-user-md"></i></h2>
+                <p>Provider Information</p>
+            </a>
+            
+            <a href="https://prescriptiontrails.org/api/" class="waves-effect waves-green col s6 m3 center-align drawerlink hoverable">
+            	<h2><i class="fa fa-code"></i></h2>
+                <p>Developers</p>
+            </a>
+            
+          </div>
+          
+        </div>
+        
+        
+      
+    </div>
+  </div>
+
+        <footer class="page-footer white z-depth-3 no-print" style="margin-top:40px;">
+          <div class="container">
+            <div class="row">
+              <div class="col l5 s12">
+                <h5 class="black-text">About Prescription Trails</h5>
+                <p class="black-text">Prescription Trails identifies walking and wheelchair rolling routes that are both safe and accessible to patients and families to promote healthy lifestyles (and pets, too!).</p>
+				<p class="black-text"><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">The Prescription Trails Website and trail data</span> by <a class="green-text text-darken-3" xmlns:cc="http://creativecommons.org/ns#" href="https://prescriptiontrails.org/" property="cc:attributionName" rel="cc:attributionURL">New Mexico Health Care Takes On Diabetes</a> are licensed under a <a class="green-text text-darken-3" rel="license" href="http://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0 International License</a>.<br />More details and exceptions <a class="green-text text-darken-3" xmlns:cc="http://creativecommons.org/ns#" href="https://prescriptiontrails.org/about/" rel="cc:morePermissions">here</a>.</p>
+              </div>
+              <div class="col l3 offset-l1 s12">
+                <h5 class="black-text">Regions</h5>
+                <ul>
+			<li><a class="green-text text-darken-3" title="Albuquerque Prescription Trails" href="https://prescriptiontrails.org/c/Albuquerque">Albuquerque</a></li>
+			<li><a class="green-text text-darken-3" title="Chaves County Prescription Trails" href="https://prescriptiontrails.org/c/Chaves-County">Chaves County</a></li>
+			<li><a class="green-text text-darken-3" title="Curry County Prescription Trails" href="https://prescriptiontrails.org/c/Curry-County">Curry County</a></li>
+			<li><a class="green-text text-darken-3" title="Grant County Prescription Trails" href="https://prescriptiontrails.org/c/Grant-County">Grant County</a></li>
+			<li><a class="green-text text-darken-3" title="Las Cruces Prescription Trails" href="https://prescriptiontrails.org/c/Las-Cruces">Las Cruces</a></li>
+			<li><a class="green-text text-darken-3" title="Otero County Prescription Trails" href="https://prescriptiontrails.org/c/Otero-County">Otero County</a></li>
+			<li><a class="green-text text-darken-3" title="Lincoln County Prescription Trails" href="https://prescriptiontrails.org/c/Lincoln-County">Lincoln County</a></li>
+			<li><a class="green-text text-darken-3" title="Rio Rancho Prescription Trails" href="https://prescriptiontrails.org/c/Rio-Rancho">Rio Rancho</a></li>
+			<li><a class="green-text text-darken-3" title="Santa Fe Prescription Trails" href="https://prescriptiontrails.org/c/Santa-Fe">Santa Fe</a></li>
+                  
+                </ul>
+              </div>
+              <div class="col l3 s12">
+                <h5 class="black-text">Links</h5>
+                <ul>
+                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/about/">About Us</a></li>
+                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/about/contact/">Contact Us</a></li>
+                                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/user/new/account/">Create Account</a></li>
+                                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/user/login/">MyPrescriptionTrails</a></li>
+                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/filter/">Find Trails</a></li>
+                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/about/tos/">Terms and Conditions</a></li>
+                  <li><a class="green-text text-darken-3" href="https://prescriptiontrails.org/about/privacy/">Privacy Policy</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+            <span class="right grey-text text-lighten-1"><a class="green-text text-darken-3" href="https://prescriptiontrails.org/api/">API</a></span>
+            </div>
+          </div>
+        </footer>
+
+  
+  <!-- UnAuth -->
+  <div id="userUnAuth" class="modal no-print">
+    <div class="modal-content">
+      <h4>Login or Register</h4>
+		<p><span class="hide-on-small-and-down">You are not currently logged in. </span>Please log in or register to continue.</p>
+        <div class="row">
+        	<div class="col s12">
+                <a class="btn-large blue waves-effect waves-light" style="width:100%" href="https://prescriptiontrails.org/user/login/?rdr=/api/">Log In</a>
+            </div>
+        </div>
+        <div class="row">
+        	<div class="col s12">
+                <a class="btn-large blue waves-effect waves-light" style="width:100%" href="https://prescriptiontrails.org/user/new/account/">Register</a>
+            </div>
+        </div>
+    <div class="modal-footer">
+      <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Close</a>
+    </div>
+  </div>  
+  </div>
+  
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js" defer></script>
+  <script src="https://prescriptiontrails.org/src/js.cookie.js" async></script>
+<script>(function($){$(function(){$(document).ready(function(){$("#filterCity").change(function(){var city=$(this).val();document.location="https://prescriptiontrails.org/c/"+city});$(".material-icons").delay(800).fadeIn();$(".fa").delay(800).fadeIn();$('.button-collapse').sideNav();$('.modal-trigger').leanModal();$('select').material_select()})})})(jQuery);var cb1=function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/icon?family=Material+Icons';var h=document.getElementsByTagName('head')[0];h.parentNode.insertBefore(l,h)};var cb2=function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css';var h=document.getElementsByTagName('head')[0];h.parentNode.insertBefore(l,h)};var raf=requestAnimationFrame||mozRequestAnimationFrame||webkitRequestAnimationFrame||msRequestAnimationFrame;if(raf){raf(cb1);raf(cb2)}else{window.addEventListener('load',cb1);window.addEventListener('load',cb2)}var Geo={};function getLocation(e,bypass){e.preventDefault();$("#cover").show();bypass=typeof bypass!=='undefined'?bypass:false;var GeoCookie=Cookies.get('location');if(GeoCookie=="known"&&bypass===false){var lat=Cookies.get('lat');var lng=Cookies.get('lng');window.location='https://prescriptiontrails.org/map/?by=coord&lat='+lat+'&lng='+lng}else{Materialize.toast('Verifying permissions.',8000);if(navigator.geolocation){navigator.geolocation.getCurrentPosition(success,showError)}}}function success(position){Materialize.toast('Awesome. Searching...',8000);Geo.lat=position.coords.latitude;Geo.lng=position.coords.longitude;var coord=[Geo.lat,Geo.lng];Cookies.remove('lat',{path:'/'});Cookies.set('lat',Geo.lat,{expires:0.01,path:''});Cookies.remove('lng',{path:'/'});Cookies.set('lng',Geo.lng,{expires:0.01,path:''});Cookies.set('location',"known",{expires:0.01,path:''});window.setTimeout("window.location = 'https://prescriptiontrails.org/map/?by=coord&lat=' + Geo.lat + '&lng=' + Geo.lng;",600)}function showError(error){$("#cover").hide();switch(error.code){case error.PERMISSION_DENIED:Materialize.toast('User denied request for Geolocation.',8000);break;case error.POSITION_UNAVAILABLE:Materialize.toast('Location information is unavailable.',8000);break;case error.TIMEOUT:Materialize.toast('The request to get user location timed out.',8000);break;case error.UNKNOWN_ERROR:Materialize.toast('An unknown error occurred.',8000);break}}function populateHeader(lat,lng){$('#Lat').html(lat);$('#Long').html(lng)}</script>
+
+
+  </body>
+</html>

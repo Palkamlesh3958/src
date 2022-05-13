@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Sign up{% endblock %}
+
+{% block body %}
+
+{% if message %}
+    <p class="message">{{ message | safe }}</p>
+{% endif %}
+
+<div class="subtitle"><h1>Create an Account</h1></div>
+<br>
+
+
+  <form action="/register" method="POST">
+
+    <p> 
+        First name <input type="text" name="fname">
+    </p>
+    <p>
+        Last name <input type="text" name="lname">
+    </p>
+    <p>
+      Email <input type="text" name="email">
+    </p>
+
+    <p>
+      Password <input type="password" name="password">
+    </p>
+
+    <p>
+        Confirm password <input type="password" name="confirm-password"
+    </p>
+
+    <p>
+        <button type="text" class="submit">submit</button>
+      </p>
+  </form>
+
+{% endblock %}
